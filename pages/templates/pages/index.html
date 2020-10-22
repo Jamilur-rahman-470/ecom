@@ -1,0 +1,37 @@
+{% extends 'layouts.html' %} {% load static %} {% block head %}
+<title>Home | DJ ECOM</title>
+<meta
+  name="description"
+  content="A ecommerce site built uising django and mongodb"
+/>
+<meta
+  name="keywords"
+  content="e-commerce, django ecommerce, django and mongodb"
+/>
+{% endblock %} {% block content %}
+
+<div class="container my-3">
+  <div class="hero-banner">
+    <div class="img"><img src="{% static 'images/2.jpg' %}" alt="" /></div>
+    <div class="overlay"></div>
+    <div class="content">
+      <p class="h1 my-2 heading text-light">DJ DIGITAL SHOP</p>
+      <p class="h2 my-1 sub-heading text-light">
+        A online shop based on Django
+      </p>
+      <div class="btn-group mt-3">
+        <a href="#" class="btn btn-primary">SHOP</a
+        ><a href="#" class="btn btn-primary">CONTACT</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-3">
+  <div class="section-header">
+    <h3 class="my-2">Featured Products</h3>
+    <div class="line my-2"></div>
+  </div>
+  
+</div>
+{% endblock %}

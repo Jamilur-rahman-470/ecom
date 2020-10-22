@@ -1,0 +1,23 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static "images/shopping-bag.png" %}" type="image/gif" sizes="16x16">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/extra.css" %}">
+    {% block head %} {% endblock %}
+  </head>
+  <body class="bg-primary">
+    {% include 'partials/_navbar.html' %} 
+      <main>{% block content %} {% endblock %}</main> 
+    {% include 'partials/_footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>
