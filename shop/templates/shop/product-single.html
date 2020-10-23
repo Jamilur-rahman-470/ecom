@@ -1,0 +1,47 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ ECOM {{product.name}}</title>
+<meta name="description" content="{{product.description}}" />
+{% endblock head %} {% block content %}
+<div class="container my-5">
+  <div class="product-detail">
+    <div class="img">
+      <img src="{{product.image.url}}" alt="{{product.name}}" />
+    </div>
+    <div class="content">
+      <h2 class="mb-2">{{product.name}}</h2>
+      <p class="my-2">
+        <span class="badge badge-danger p-2">{{product.category}}</span>
+        <span class="badge badge-danger p-2">{{product.sub_category}}</span>
+      </p>
+
+      {% if product.discounted_price > 0 %}
+      <h3 class="text-danger"><del>$ {{product.price}}</del></h3>
+      <h3>
+        Dicounted Price
+        <span class="text-success">$ {{product.discounted_price}}</span>
+      </h3>
+      {% else %}
+      <h3 class="text-warning">$ {{product.price}}</h3>
+      {% endif %}
+
+      <div class="btns my-3">
+        <a href="#" class="btn btn-secondary w-50">ADD TO CART</a
+        ><a href="#" class="btn btn-secondary w-50">ADD TO WISHLIST</a>
+      </div>
+      <p class="text-bold my-3">{{product.description}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="container my-3">
+  <div class="section-header">
+    <h3 class="my-2">Also See</h3>
+    <div class="line my-2"></div>
+  </div>
+  <div class="products my-5">
+    {% for item in products %} 
+        {% include 'partials/_product-cards.html' %} 
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

@@ -32,6 +32,26 @@
     <h3 class="my-2">Featured Products</h3>
     <div class="line my-2"></div>
   </div>
-  
+  <div class="products">
+    
+    {% for item in featured %}
+        {% include 'partials/_product-cards.html' %}
+    {% endfor %}
+      
+  </div>
+</div>
+
+<div class="container my-3">
+  <div class="section-header">
+    <h3 class="my-2">Top Products</h3>
+    <div class="line my-2"></div>
+  </div>
+  <div class="products">
+    
+    {% for item in top_product %}
+        {% include 'partials/_product-cards.html' %}
+    {% endfor %}
+      
+  </div>
 </div>
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ || SIGN UP</title>
+{% endblock %} {% block content %}
+<div class="container my-3">
+  <div class="auth-form px-3 py-5">
+    <h3 class="my-5">SIGN UP</h3>
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="from-group my-2 auth-group">
+        <label for="exampleInputEmail1">{{form.username.label}}</label>
+        {{form.username}}
+      </div>
+      <div class="from-group my-2 auth-group">
+        <label for="exampleInputEmail1">{{form.email.label}}</label>
+        {{form.email}}
+      </div>
+      <div class="from-group my-2 auth-group">
+        <label for="exampleInputEmail1">{{form.password1.label}}</label>
+        {{form.password1}}
+      </div>
+      <div class="from-group my-2 auth-group">
+        <label for="exampleInputEmail1">{{form.password2.label}}</label>
+        {{form.password2}}
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Register</button>
+      <div class="auth-errors">
+        {{form.errors}}
+      </div>
+      <small>Already have an account?</small>
+      <a href="{% url 'login'%}" class="btn btn-primary w-100">Login</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

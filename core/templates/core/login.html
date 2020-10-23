@@ -1,0 +1,41 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ || SIGN IN</title>
+{% endblock %} {% block content %}
+<div class="container my-3">
+  {% for m in messages %}
+  <div class="alert alert-secondary" role="alert">
+    {{m}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true" data-feather="x-square"></span>
+    </button>
+  </div>
+  {% endfor %}
+  <div class="auth-form px-3 py-5">
+    <h3 class="my-5">SIGN IN</h3>
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="from-group my-2">
+        <label for="exampleInputEmail1">Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Your username"
+          class="form-control"
+        />
+      </div>
+      <div class="from-group my-2">
+        <label for="exampleInputEmail1">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Your password"
+          class="form-control"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+      <small>Don't have an account? </small>
+      <a href="{% url 'register'%}" class="btn btn-primary w-100">Register</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

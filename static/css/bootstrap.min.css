@@ -1912,7 +1912,9 @@ pre code {
   color: #55595c;
   background-color: #f7f7f9;
   background-clip: padding-box;
-  border: 0 solid #ced4da;
+  box-shadow: none;
+  
+  border: 2px solid rgba(0,0,0,.4);
   border-radius: 0;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
