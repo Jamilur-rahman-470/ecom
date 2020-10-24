@@ -1,3 +1,4 @@
+from core.models import AddressAndInfo, Profile
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -23,3 +24,20 @@ def allowed_user(allowed_roles=[]):
                 return render(request, 'core/unauthorized.html')
         return wrapper_func
     return decorator
+
+def profile_exists(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if Profile.objects.filter(user = request.user):
+            return render(request, 'core/unauthorized.html')
+        else:
+            return view_func(request, *args, **kwargs)
+    return wrapper_func
+
+
+def address_exists(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if AddressAndInfo.objects.filter(user = request.user):
+            return render(request, 'core/unauthorized.html')
+        else:
+            return view_func(request, *args, **kwargs)
+    return wrapper_func

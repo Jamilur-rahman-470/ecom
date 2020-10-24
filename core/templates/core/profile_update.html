@@ -1,0 +1,47 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>Update Profle</title>
+{% endblock head %} {% block content %}
+
+<div class="container my-5">
+  <div
+    class="flex-column align-items-center justify-content-center w-100"
+    style="display: flex; height: 85vh"
+  >
+    <div class="card p-3" style="width: 310px">
+      <h4 class="text-dark text-center">Upadte Profile</h4>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group my-2" id="profile-update">
+          <label for="first_name" class="text-dark"
+            >{{profile_form.first_name.label}}</label
+          >
+          {{profile_form.first_name}}
+        </div>
+        <div class="form-group my-2" id="profile-update">
+          <label for="first_name" class="text-dark"
+            >{{profile_form.last_name.label}}</label
+          >
+          {{profile_form.last_name}}
+        </div>
+        <div class="form-group my-2" id="profile-update">
+          <label for="first_name" class="text-dark"
+            >{{profile_form.email.label}}</label
+          >
+          {{profile_form.email}}
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update</button>
+      </form>
+    </div>
+
+    {% for error in profile_form.errors%} {{error}} {% endfor %}
+  </div>
+</div>
+
+<script>
+  var input = document.querySelectorAll("#profile-update input");
+  input[0].placeholder = "First Name";
+  input[1].placeholder = "Last Name";
+  input[2].placeholder = "Email";
+  input.forEach((elm) => elm.classList.add("form-control"));
+</script>
+{% endblock content %}

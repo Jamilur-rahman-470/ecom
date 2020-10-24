@@ -2,6 +2,32 @@
 <title>Dashboard</title>
 {% endblock %} {% block content %}
 <div class="container my-3">
-    <h1 class="text-light">{{request.user}}</h1>
+  <div class="user-infos">
+    <div class="card p-4">
+      {% if have_profile %}
+      <p class="h4 text-dark">
+        Welcome Back, {{profile.first_name}} {{profile.last_name}}
+      </p>
+      <p class="h5 text-dark">{{profile.email}}</p>
+      {% else %}
+      <a href="{% url 'user.profile.update' %}" class="btn btn-primary"
+        >ADD Profile Info</a
+      >
+      {% endif %}
+    </div>
+    <div class="card p-4 text-dark">
+      {% if  address_there %}
+      <h4 class="text-dark">Address and Info</h4>
+      <p class="h5 text-dark">
+        {{address.home_street}}, {{address.city}}, {{address.country}}
+      </p>
+      <p class="h5 text-dark">{{address.phone}}</p>
+      {% else %}
+      <a href="{% url 'user.address.update' %}" class="btn btn-primary"
+        >ADD Address</a
+      >
+      {% endif %}
+    </div>
+  </div>
 </div>
 {% endblock %}

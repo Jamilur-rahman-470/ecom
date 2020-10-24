@@ -14,10 +14,18 @@ class AddressAndInfo(models.Model):
     def __str__(self):
         return f'{self.user}'
 
+
 class Profile(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    info =models.ForeignKey(to=AddressAndInfo, unique=True, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    email = models.EmailField(blank=True)
+    info = models.ForeignKey(to=AddressAndInfo, unique=True,
+                             on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True, null=True)
+
     def __str__(self):
         return f'{self.first_name}'
+
+    # def save(self, *args, **kwargs):
+    #     self.user = self.request.user
+    #     super(Profile, self).save(*args, **kwargs)
