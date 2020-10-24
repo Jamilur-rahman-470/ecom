@@ -1,3 +1,4 @@
+from shop.models import Order
 from core.models import AddressAndInfo, Profile
 from core.decorators import address_exists, allowed_user, authenticated_user, profile_exists
 from django.shortcuts import render, redirect
@@ -62,11 +63,13 @@ def user_dashboard(request):
         profile = Profile.objects.get(user = request.user)
     else:
         profile = None
+    
     context = {
         'profile': profile,
         'have_profile': is_there,
         'address_there': address_there,
-        'address': address
+        'address': address,
+        'orders': Order.objects.filter(owner = Profile.objects.get(user= request.user.id))
     }
     return render(request, 'core/user_dash.html', context)
 

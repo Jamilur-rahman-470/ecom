@@ -1,8 +1,10 @@
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
-
+import uuid
+from core.models import AddressAndInfo, Profile
 # Create your models here.
 
 
@@ -61,3 +63,37 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
+class OrderItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    is_ordered = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    date_added = models.DateTimeField(auto_now=True)
+    date_ordered = models.DateTimeField(null = True)
+
+    def __str__(self):
+        return self.product.name
+
+class Order(models.Model):
+    ref_code = models.UUIDField(default=uuid.uuid4, editable=False)
+    items = models.ManyToManyField(OrderItem)
+    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    is_ordered = models.BooleanField(default=True)
+    date_ordered = models.DateTimeField(auto_now=True)
+    shipping = models.ForeignKey(AddressAndInfo, on_delete=models.SET_NULL, null=True)
+    is_shipped = models.BooleanField(default=False)
+    price = models.FloatField(default=0.0)
+    def get_cart_items(self):
+        return self.items.all()
+    
+    def get_cart_total(self):
+        total = 0
+        for item in self.items.all():
+            if item.product.discounted_price > 0: 
+                total = total + item.product.discounted_price
+            else:
+                total = total + item.product.price
+        return total
+
+    def __str__(self):
+        return f'{self.owner}'
