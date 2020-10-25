@@ -1,11 +1,18 @@
-from core.models import AddressAndInfo, Profile
-from django.contrib import messages
 from shop.models import Order, OrderItem, Product
 from django.shortcuts import redirect, render
 from core.decorators import allowed_user
 from django.contrib.auth.decorators import login_required
-import pdb
 # Create your views here.
+
+def get_total(items):
+    total = 0
+    for i in items:
+        if i.item.discounted_price > 0:
+            total = total + i.item.discounted_price
+        else:
+            total = total + i.item.price
+    return total
+
 
 
 def single_product_page(request, slug):
@@ -21,15 +28,11 @@ def single_product_page(request, slug):
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['customer'])
 def cart_page(request):
-    total = 0
-    for item in OrderItem.objects.filter(owner=request.user, is_ordered=False).all():
-        if item.product.discounted_price > 0:
-            total = total + item.product.discounted_price
-        else:
-            total = total + item.product.price
-    context = {
-        'items': OrderItem.objects.filter(owner=request.user, is_ordered=False).all(),
-        'total': total
+    items = OrderItem.objects.filter(is_ordered = False, owner = request.user).all()
+
+    context ={
+        "cart": items,
+        'total': get_total(items)
     }
     return render(request, 'shop/cart-page.html', context)
 
@@ -37,53 +40,43 @@ def cart_page(request):
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['customer'])
 def add_to_cart(request, **kwargs):
-    product = Product.objects.filter(id=kwargs.get('itemId', "")).get()
+    product = Product.objects.get(id = kwargs.get('itemId'))
+    p = 0
+    if product.discounted_price > 0:
+        p = product.discounted_price
+    else:
+        p = product.price
     OrderItem.objects.create(
-        product=product, owner=request.user
+        owner = request.user,
+        item = product,
+        price = p
     )
-
-
     return redirect('cart')
+
 
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['customer'])
 def delete_cart_item(request, **kwargs):
-    OrderItem.objects.filter(id=kwargs.get('id', "")).delete()
+    OrderItem.objects.filter(id = kwargs.get('id')).delete()
     return redirect('cart')
 
-# ORDER HELPER
-def add_item_to_order(items, id):
-    order = Order.objects.filter(ref_code = id).first()
-    for item in items:
-        order.items.add(item)
+
 
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['customer'])
 def checkout(request):
-    order_items = OrderItem.objects.filter(
-        owner=request.user).filter(is_ordered=False).all()
-
-    address = AddressAndInfo.objects.filter(user=request.user).get()
-    if(order_items.count() > 0):
-        total = 0
-        for item in OrderItem.objects.filter(owner=request.user).filter(is_ordered=False).all():
-            if item.product.discounted_price > 0:
-                total = total + item.product.discounted_price
-            else:
-                total = total + item.product.price
-        order = Order.objects.create(
-            owner = Profile.objects.get(user= request.user.id),
-            shipping = address,
-            price = total
-        )
-        new = Order.objects.get(items = None)
-        print(new.ref_code)
-        new.items.add(OrderItem.objects.get(owner=request.user, is_ordered=False))
-        for item in order_items:
-            item.is_ordered = True
-            item.save()
-        return redirect('dash')
-    else:
-        messages.success(request, 'No item in Cart')
-        return redirect('index')
+    items = OrderItem.objects.filter(owner = request.user, is_ordered = False).all()
+    order = Order(
+        owner = request.user,
+        price = get_total(items)
+    )
+    order.save()
+    for i in items:
+        order.items.add(OrderItem.objects.get(id = i.id))
+        order.save()
+    for i in items:
+        i.is_ordered = True
+        i.save()
+    
+    return redirect('dash')

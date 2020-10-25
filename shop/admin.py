@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem, Product, Category, SubCategory
+from .models import  Product, Category, SubCategory, Order, OrderItem
 # Register your models here.
 
 
@@ -27,13 +27,13 @@ class SubCategoryAdmin(admin.ModelAdmin):
     }
         
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = [ 'owner', 'product', 'is_ordered']
+    list_display = [ 'owner', 'item', 'is_ordered', 'price']
     
     
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id','ref_code', 'is_shipped', 'owner']
-    
-        
+    list_display = ['ref_code', 'is_processed', 'owner', 'price']
+
+
 
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)

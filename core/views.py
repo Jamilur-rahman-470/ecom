@@ -1,3 +1,4 @@
+
 from shop.models import Order
 from core.models import AddressAndInfo, Profile
 from core.decorators import address_exists, allowed_user, authenticated_user, profile_exists
@@ -51,9 +52,11 @@ def register_user(request):
 def user_dashboard(request):
     is_there = Profile.objects.filter(user = request.user)
     address_there = AddressAndInfo.objects.filter(user = request.user)
+    is_order = Order.objects.filter(owner = request.user)
 
     profile = None
     address = None
+    order = None
     if (address_there):
         address = AddressAndInfo.objects.get(user = request.user)
     else: 
@@ -63,13 +66,16 @@ def user_dashboard(request):
         profile = Profile.objects.get(user = request.user)
     else:
         profile = None
-    
+    if is_order:
+        order = is_order
+    else:
+        order = None
     context = {
         'profile': profile,
         'have_profile': is_there,
         'address_there': address_there,
         'address': address,
-        'orders': Order.objects.filter(owner = Profile.objects.get(user= request.user.id))
+        'orders': order,
     }
     return render(request, 'core/user_dash.html', context)
 

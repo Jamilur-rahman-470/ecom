@@ -16,7 +16,7 @@
       {% endif %}
     </div>
     <div class="card p-4 text-dark">
-      {% if  address_there %}
+      {% if address_there %}
       <h4 class="text-dark">Address and Info</h4>
       <p class="h5 text-dark">
         {{address.home_street}}, {{address.city}}, {{address.country}}
@@ -29,5 +29,46 @@
       {% endif %}
     </div>
   </div>
+</div>
+<div class="container my-4">
+  <div class="section-header">
+    <h3 class="my-2">Orders</h3>
+    <div class="line my-2"></div>
+  </div>
+</div>
+<div class="container my-4">
+  {% for order in orders %}
+  <div class="my-3 p-4" style="background-color: #404040;">
+    <p class="h5 my-4 text-light">Order Number - {{order.ref_code}}</p>
+    
+    <div class="ordered-product">
+      {% for i in order.items.all %}
+
+      <div
+        class="card custom-card p-3"
+        style="background: #000;"
+      >
+        <div class="img">
+          <img src="{{i.item.image.url}}" alt="{{item.name}}" style="border-radius: 0;"/>
+        </div>
+        <h4 class="my-2">{{i.item.name}}</h4>
+        <div class="btns">
+          <a
+            href="{{i.item.file.url}}"
+            class="btn btn-secondary btn-sm"
+            download
+            ><i data-feather="download"></i
+          ></a>
+          <a
+            href="#"
+            class="btn btn-secondary btn-sm"
+            ><i data-feather="heart"></i
+          ></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
