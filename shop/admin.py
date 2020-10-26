@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Product, Category, SubCategory, Order, OrderItem
+from .models import  Product, Category, SubCategory, Order, OrderItem, WishList
 # Register your models here.
 
 
@@ -33,8 +33,10 @@ class OrderItemAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['ref_code', 'is_processed', 'owner', 'price']
 
+class WishAdmin(admin.ModelAdmin):
+    list_display = ['owner', 'item']
 
-
+admin.site.register(WishList, WishAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Product, ProductAdmin)

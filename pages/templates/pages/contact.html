@@ -1,0 +1,58 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ | Contact</title>
+{% endblock head %} {% block content %}
+<style>
+    .contact{
+        width: 100%;
+        height: 85vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+  .contact-form {
+    width: 300px;
+  }
+  
+</style>
+<div class="container my-5">
+  <div class="contact">
+    <div class="card contact-form p-3">
+        <h4 class="text-center my-3 text-dark">Contact</h4>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="from-group my-2">
+            <label for="exampleInputEmail1" class="text-dark">Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              class="form-control"
+            />
+          </div>
+          <div class="from-group my-2">
+            <label for="exampleInputEmail1" class="text-dark">Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              class="form-control"
+            />
+          </div>
+          <div class="from-group my-2">
+            <label for="exampleInputEmail1" class="text-dark">Message</label>
+            <textarea
+              cols="5"
+              rows="5"
+              type="text"
+              name="message"
+              placeholder="Message"
+              class="form-control"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Contact</button>
+        </form>
+      </div>
+  </div>
+</div>
+{% endblock content %}

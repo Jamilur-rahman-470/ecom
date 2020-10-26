@@ -82,3 +82,11 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.ref_code)
+
+
+class WishList(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.owner)

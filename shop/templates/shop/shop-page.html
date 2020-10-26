@@ -1,0 +1,40 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ Head</title>
+{% endblock head %} {% block content %}
+
+<div class="container">
+  <div class="products">
+    {% for item in products %}
+
+    <div
+      class="card custom-card p-3"
+      style="background: #000; border-radius: 20px"
+    >
+      <div class="img">
+        <img src="{{item.image.url}}" alt="{{item.name}}" />
+      </div>
+      <h4 class="my-2">{{item.name}}</h4>
+      <h5 class="my-2">$ {{item.price}}</h5>
+      <h5 class="my-2">Discounted $ {{item.discounted_price|floatformat:2}}</h5>
+      <div class="btns">
+        <a
+          href="{% url 'to-cart' itemId=item.id %}"
+          class="btn btn-secondary btn-sm"
+          ><i data-feather="shopping-bag"></i
+        ></a>
+        <a
+          href="{% url 'wishlist.add' id=item.id%}"
+          class="btn btn-secondary btn-sm"
+          ><i data-feather="heart"></i
+        ></a>
+        <a
+          href="{% url 'product.single' slug=item.slug %}"
+          class="btn btn-secondary btn-sm"
+          ><i data-feather="arrow-right-circle"></i
+        ></a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

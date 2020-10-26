@@ -18,18 +18,17 @@
         <li class="nav-item active">
           <a href="{% url 'index' %}" class="nav-link">Home</a>
         </li>
-        <li class="nav-item active"><a href="#" class="nav-link">Shop</a></li>
+        <li class="nav-item active"><a href="{% url 'shop' %}" class="nav-link">Shop</a></li>
         <li class="nav-item active">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="{% url 'contact' %}" class="nav-link">Contact</a>
         </li>
-        <li class="nav-item active"><a href="#" class="nav-link">About</a></li>
       </ul>
       <ul class="navbar-nav float-right" id="nav-fix">
         <li class="nav-item active">
-          <a href="{% url 'cart' %}" class="nav-link"><i data-feather="shopping-bag"></i></a>
+          <a href="{% url 'cart' %}" class="nav-link"><i data-feather="shopping-bag"></i> <span class="badge badge-danger p-1 mx-2">{{cart_count}}</span></a>
         </li>
         <li class="nav-item active">
-          <a href="#" class="nav-link"><i data-feather="heart"></i></a>
+          <a href="{% url 'wishlist' %}" class="nav-link"><i data-feather="heart"></i> <span class="badge badge-danger p-1 mx-2">{{wish_count}}</span></a>
         </li>
 
         {% if request.user.is_authenticated %}

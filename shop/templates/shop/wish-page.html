@@ -1,0 +1,33 @@
+{% extends 'layouts.html' %} {% block head %}
+<title>DJ Wishlist</title>
+{% endblock head %} {% block content %}
+<div class="container">
+  <div class="card my-5 p-4">
+    {% for item in wishlist %}
+    <div class="cart-items my-3">
+      <img
+        src="{{item.item.image.url}}"
+        alt="{{item.item.name}}"
+        width="150"
+      />
+      <h5 class="text-dark">{{item.item.name}}</h5>
+      <h5 class="text-dark">$ {{item.item.price}}</h5>
+      <h5 class="text-success">
+        Discounted ${{item.item.discounted_price|floatformat:2}}
+      </h5>
+      <a href="{% url 'wishlist.delete' id=item.id %}" class="text-danger"
+        ><i data-feather="x-circle"></i
+      ></a>
+    </div>
+    {% endfor %}
+    <div class="checkout-btn">
+      <a href="{% url 'wishlist.delete.all' %}" class="btn btn-danger" style="width: 200px"
+        >Clear Wishlist</a
+      >
+      <a href="{% url 'wishlist.cart' %}" class="btn btn-danger" style="width: 200px"
+        >ADD ALL TO CART</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock content %}
